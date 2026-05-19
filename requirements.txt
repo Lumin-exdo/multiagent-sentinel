@@ -1,0 +1,13 @@
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-openai
+langchain-community
+langchain-text-splitters
+duckduckgo-search
+rank_bm25
+chromadb
+pydantic>=2.0
+python-dotenv
+pdfminer.six
+fastapi
+uvicorn
