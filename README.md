@@ -16,10 +16,10 @@ graph TD
     financial_agent --> evidence_evaluator
     macro_agent     --> evidence_evaluator
 
-    evidence_evaluator -->|retry_news|      news_agent
-    evidence_evaluator -->|retry_financial| financial_agent
-    evidence_evaluator -->|retry_macro|     macro_agent
-    evidence_evaluator -->|continue|        contradiction_detector
+    evidence_evaluator -->|"retry_news"| news_agent
+    evidence_evaluator -->|"retry_financial"| financial_agent
+    evidence_evaluator -->|"retry_macro"| macro_agent
+    evidence_evaluator -->|"continue"| contradiction_detector
 
     contradiction_detector --> report_writer
     report_writer --> END
