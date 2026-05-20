@@ -18,5 +18,4 @@ def financial_agent(state: AgentState) -> AgentState:
         "retrieval_type": "financial",
     }
 
-    state["financial_evidence"] = evidence
-    return state
+    return {"financial_evidence": evidence}

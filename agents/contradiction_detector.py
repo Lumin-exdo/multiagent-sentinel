@@ -47,5 +47,4 @@ def contradiction_detector(state: AgentState) -> AgentState:
     except (json.JSONDecodeError, AttributeError):
         contradictions = []
 
-    state["contradictions"] = contradictions
-    return state
+    return {"contradictions": contradictions}

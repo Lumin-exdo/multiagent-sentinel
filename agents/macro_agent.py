@@ -18,5 +18,4 @@ def macro_agent(state: AgentState) -> AgentState:
         "retrieval_type": "macro",
     }
 
-    state["macro_evidence"] = evidence
-    return state
+    return {"macro_evidence": evidence}

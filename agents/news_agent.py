@@ -1,23 +1,33 @@
-try:
-    from ddgs import DDGS
-except ImportError:
-    from duckduckgo_search import DDGS
+import os
+import requests
 
 from agents.state import AgentState, EvidenceItem
 
+_SERPER_URL = "https://google.serper.dev/news"
 
-def news_agent(state: AgentState) -> AgentState:
+
+def news_agent(state: AgentState) -> dict:
     query = state["news_query"]
+    api_key = os.getenv("SERPER_API_KEY", "")
 
-    with DDGS() as ddgs:
-        results = list(ddgs.text(query, max_results=5))
-
-    if results:
-        content = "\n\n".join(
-            f"[{r.get('title', '')}]\n{r.get('body', '')}\n来源: {r.get('href', '')}"
-            for r in results
+    try:
+        resp = requests.post(
+            _SERPER_URL,
+            headers={"X-API-KEY": api_key, "Content-Type": "application/json"},
+            json={"q": query, "gl": "cn", "hl": "zh-cn", "num": 5},
+            timeout=10,
         )
-        sources = [r.get("href", "") for r in results if r.get("href")]
+        resp.raise_for_status()
+        items = resp.json().get("news", [])
+    except Exception:
+        items = []
+
+    if items:
+        content = "\n\n".join(
+            f"[{r.get('title', '')}]\n{r.get('snippet', '')}\n来源: {r.get('link', '')}"
+            for r in items
+        )
+        sources = [r.get("link", "") for r in items if r.get("link")]
     else:
         content = "未找到相关新闻。"
         sources = []
@@ -29,5 +39,4 @@ def news_agent(state: AgentState) -> AgentState:
         "retrieval_type": "news",
     }
 
-    state["news_evidence"] = evidence
-    return state
+    return {"news_evidence": evidence}

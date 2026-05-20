@@ -69,5 +69,4 @@ def report_writer(state: AgentState) -> AgentState:
         "sources": data.get("sources", all_sources),
     }
 
-    state["report"] = report
-    return state
+    return {"report": report}

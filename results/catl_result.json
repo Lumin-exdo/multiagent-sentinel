@@ -1,0 +1,22 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+开始分析：宁德时代
+==================================================
+Loading weights:   0%|          | 0/71 [00:00<?, ?it/s]Loading weights:  62%|██████▏   | 44/71 [00:00<00:00, 435.23it/s]Loading weights: 100%|██████████| 71/71 [00:00<00:00, 603.20it/s]
+{
+  "company": "宁德时代",
+  "overall_sentiment": "bullish",
+  "confidence": 0.8,
+  "evidence_quality": {
+    "news": 0.0,
+    "financial": 0.5,
+    "macro": 0.3
+  },
+  "contradictions": [],
+  "summary": "宁德时代作为全球动力电池龙头，2025年总资产同比增长23.92%，净资产增长36.52%，财务基础稳固。宏观层面，新能源汽车产业政策明确2025年销量占比20%目标，且财政部延续免征购置税至2025年底，直接利好下游需求；同时动力电池回收新政要求全生命周期管理，强化龙头企业在回收体系中的优势地位。虽近期财报细节有限，但公司自身经营持续能力无不确定性，叠加行业景气度与政策支持，中长期发展前景乐观。短期需关注市场竞争及原材料价格波动，但整体趋势偏正面。",
+  "sources": [
+    "宁德时代2024年年度报告",
+    "宁德时代2026年第一季度报告",
+    "六部门《新能源汽车废旧动力电池回收和综合利用管理暂行办法》",
+    "工信部《新能源汽车产业发展规划》及财政部免征购置税政策"
+  ]
+}

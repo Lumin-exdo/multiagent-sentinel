@@ -43,7 +43,8 @@ def query_planner(state: AgentState) -> AgentState:
     data = json.loads(raw)
     plan = QueryPlan(**data)
 
-    state["news_query"] = plan.news_query
-    state["financial_query"] = plan.financial_query
-    state["macro_query"] = plan.macro_query
-    return state
+    return {
+        "news_query":      plan.news_query,
+        "financial_query": plan.financial_query,
+        "macro_query":     plan.macro_query,
+    }

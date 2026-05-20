@@ -22,7 +22,7 @@ def _score_evidence(llm, query: str, content: str) -> float:
         return 0.5
 
 
-def evidence_evaluator(state: AgentState) -> AgentState:
+def evidence_evaluator(state: AgentState) -> dict:
     llm = ChatOpenAI(
         api_key=DEEPSEEK_API_KEY,
         base_url=LLM_BASE_URL,
@@ -30,8 +30,7 @@ def evidence_evaluator(state: AgentState) -> AgentState:
         temperature=0,
     )
 
-    # 每轮重置，由下方逻辑重新填充
-    state["needs_retry"] = []
+    updates: dict = {"needs_retry": []}
 
     for ev_key, q_key, retry_key in _CHECKS:
         ev = state.get(ev_key)
@@ -39,16 +38,17 @@ def evidence_evaluator(state: AgentState) -> AgentState:
             continue
 
         score = _score_evidence(llm, state[q_key], ev["content"])
+        ev = dict(ev)
         ev["quality_score"] = score
-        state[ev_key] = ev
+        updates[ev_key] = ev
 
         current_retry = state.get(retry_key, 0)
         if score < 0.5 and current_retry < 2:
-            state[q_key] = state[q_key] + " 相关信息 最新"
-            state[retry_key] = current_retry + 1
-            state["needs_retry"].append(ev["retrieval_type"])
+            updates[q_key] = state[q_key] + " 相关信息 最新"
+            updates[retry_key] = current_retry + 1
+            updates["needs_retry"].append(ev["retrieval_type"])
 
-    return state
+    return updates
 
 
 def route_after_evaluation(state: AgentState) -> str:
